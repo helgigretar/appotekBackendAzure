@@ -85,15 +85,17 @@ namespace dotNetCoreAzure.Pages
         [HttpPost]
         public async Task<IActionResult> Postmembers([FromBody] members members)
         {
-            if (!ModelState.IsValid)
+            
+            //Skoða hvort að það er til usernameið og rétt paswword
+            var result = _context.members.Where(s => s.username == members.username && dotNetCoreAzure.Pages.decrypter.cryption.Decrypt(s.password) == members.password).ToList();
+            if (result.Count > 0)
             {
-                return BadRequest(ModelState);
+                return CreatedAtAction("Getmembers", new { status = result.Last().name });
             }
-
-            _context.members.Add(members);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("Getmembers", new { id = members.Id }, members);
+            else
+            {
+                return CreatedAtAction("Getmembers", new { status = "Wrong credentials"});
+            }            
         }
 
         // DELETE: api/login/5
