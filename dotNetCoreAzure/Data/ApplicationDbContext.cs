@@ -14,6 +14,5 @@ namespace dotNetCoreAzure.Data
         {
         }
         public DbSet<members> members { get; set; }
-        public DbSet<meds> meds { get; set; }
     }
 }
