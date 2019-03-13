@@ -104,7 +104,7 @@ namespace dotNetCoreAzure.Pages
             }
             if(errors.Length != 0)
             {
-                return CreatedAtAction("Getmembers", new { status = errors });
+                return BadRequest(new { status = errors });
 
             }
             members = new members

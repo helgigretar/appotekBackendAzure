@@ -92,11 +92,12 @@ namespace dotNetCoreAzure.Pages
             var result = _context.members.Where(s => s.username == username && dotNetCoreAzure.Pages.decrypter.cryption.Decrypt(s.password) == password).ToList();
             if (result.Count > 0)
             {
-                return CreatedAtAction("Getmembers", new { status = result.Last().name });
+                return Accepted( new { status = result.Last().name });
             }
             else
             {
-                return CreatedAtAction("Getmembers", new { status = "Wrong credentials" });
+                return BadRequest(new { status = "Wrong Credentials" });
+               // return CreatedAtAction("Getmembers", new { status = "Wrong credentials" });
             }            
         }
         public string format(string temp)
