@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotNetCoreAzure.Data;
+using System.Net.Mail;
 
 namespace dotNetCoreAzure.Pages
 {
@@ -85,19 +86,25 @@ namespace dotNetCoreAzure.Pages
         [HttpPost]
         public async Task<IActionResult> Postmembers([FromBody] members members)
         {
-            
+            string username = format(members.username);
+            string password = format(members.password);
             //Skoða hvort að það er til usernameið og rétt paswword
-            var result = _context.members.Where(s => s.username == members.username && dotNetCoreAzure.Pages.decrypter.cryption.Decrypt(s.password) == members.password).ToList();
+            var result = _context.members.Where(s => s.username == username && dotNetCoreAzure.Pages.decrypter.cryption.Decrypt(s.password) == password).ToList();
             if (result.Count > 0)
             {
                 return CreatedAtAction("Getmembers", new { status = result.Last().name });
             }
             else
             {
-                return CreatedAtAction("Getmembers", new { status = "Wrong credentials"});
+                return CreatedAtAction("Getmembers", new { status = "Wrong credentials" });
             }            
         }
-
+        public string format(string temp)
+        {
+            temp = temp.Replace("[", "");
+            temp = temp.Replace("]", "");
+            return temp;
+        }
         // DELETE: api/login/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Deletemembers([FromRoute] int id)
