@@ -7,15 +7,16 @@ namespace dotNetCoreAzure.Data
 {
     public class meds
     {
-        public int Id { get; set; }
-        public String vpnr { get; set; }
-        public String nafn { get; set; }
-        public String lyfjaform { get; set; }
-        public String styrkleiki { get; set; }
-        public String innihald_lyfs { get; set; }
-        public String afgreidslutilhogun { get; set; }
-        public String markadsleyfi_utgefid { get; set; }
-        public String markadsett { get; set; }
-        public String ymsar_upplysingar { get; set; }
+        public int id { get; set; }
+        public String name { get; set; }
+        public String active_ingredient { get; set; }
+        public String pharmaceutical_form { get; set; }
+        public String strength { get; set; }
+        public String atc_code { get; set; }
+        public String legal_status { get; set; }
+        public String vnr { get; set; }
+        public String other_info { get; set; }
+        public String marketed { get; set; }
+        public String ma_issued { get; set; }
     }
 }

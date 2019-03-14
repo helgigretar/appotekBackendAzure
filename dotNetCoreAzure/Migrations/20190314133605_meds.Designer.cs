@@ -10,7 +10,7 @@ using dotNetCoreAzure.Data;
 namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190314023509_meds")]
+    [Migration("20190314133605_meds")]
     partial class meds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,29 +23,31 @@ namespace dotNetCoreAzure.Migrations
 
             modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("afgreidslutilhogun");
+                    b.Property<string>("active_ingredient");
 
-                    b.Property<string>("innihald_lyfs");
+                    b.Property<string>("atc_code");
 
-                    b.Property<string>("lyfjaform");
+                    b.Property<string>("legal_status");
 
-                    b.Property<string>("markadsett");
+                    b.Property<string>("ma_issued");
 
-                    b.Property<string>("markadsleyfi_utgefid");
+                    b.Property<string>("marketed");
 
-                    b.Property<string>("nafn");
+                    b.Property<string>("name");
 
-                    b.Property<string>("styrkleiki");
+                    b.Property<string>("other_info");
 
-                    b.Property<string>("vpnr");
+                    b.Property<string>("pharmaceutical_form");
 
-                    b.Property<string>("ymsar_upplysingar");
+                    b.Property<string>("strength");
 
-                    b.HasKey("Id");
+                    b.Property<string>("vnr");
+
+                    b.HasKey("id");
 
                     b.ToTable("meds");
                 });

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotNetCoreAzure.Data;
 
 namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190314194520_cabinet")]
+    partial class cabinet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,31 +21,48 @@ namespace dotNetCoreAzure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
+            modelBuilder.Entity("dotNetCoreAzure.Data.cabinet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("afgreidslutilhogun");
+                    b.Property<int>("medicineID");
 
-                    b.Property<string>("innihald_lyfs");
-
-                    b.Property<string>("lyfjaform");
-
-                    b.Property<string>("markadsett");
-
-                    b.Property<string>("markadsleyfi_utgefid");
-
-                    b.Property<string>("nafn");
-
-                    b.Property<string>("styrkleiki");
-
-                    b.Property<string>("vpnr");
-
-                    b.Property<string>("ymsar_upplysingar");
+                    b.Property<int>("userID");
 
                     b.HasKey("Id");
+
+                    b.ToTable("cabinet");
+                });
+
+            modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("active_ingredient");
+
+                    b.Property<string>("atc_code");
+
+                    b.Property<string>("legal_status");
+
+                    b.Property<string>("ma_issued");
+
+                    b.Property<string>("marketed");
+
+                    b.Property<string>("name");
+
+                    b.Property<string>("other_info");
+
+                    b.Property<string>("pharmaceutical_form");
+
+                    b.Property<string>("strength");
+
+                    b.Property<string>("vnr");
+
+                    b.HasKey("id");
 
                     b.ToTable("meds");
                 });
