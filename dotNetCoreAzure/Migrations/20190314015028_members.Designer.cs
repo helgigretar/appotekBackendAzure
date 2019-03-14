@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotNetCoreAzure.Data;
 
-namespace dotNetCoreAzure.Data.Migrations
+namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190314015028_members")]
+    partial class members
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,9 @@ namespace dotNetCoreAzure.Data.Migrations
 
                     b.Property<string>("name");
 
-                    b.Property<string>("password");
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
 

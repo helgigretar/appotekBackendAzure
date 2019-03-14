@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace dotNetCoreAzure.Data.Migrations
+namespace dotNetCoreAzure.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class meds : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,58 @@ namespace dotNetCoreAzure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "meds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    vpnr = table.Column<string>(nullable: true),
+                    nafn = table.Column<string>(nullable: true),
+                    lyfjaform = table.Column<string>(nullable: true),
+                    styrkleiki = table.Column<string>(nullable: true),
+                    innihald_lyfs = table.Column<string>(nullable: true),
+                    afgreidslutilhogun = table.Column<string>(nullable: true),
+                    markadsleyfi_utgefid = table.Column<string>(nullable: true),
+                    markadsett = table.Column<string>(nullable: true),
+                    ymsar_upplysingar = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_meds", x => x.Id);
+                });
+            migrationBuilder.InsertData(
+                       table: "meds",
+                       columns: new[] { "vpnr", "nafn", "lyfjaform", "styrkleiki", "innihald_lyfs", "afgreidslutilhogun", "markadsleyfi_utgefid", "markadsett", "ymsar_upplysingar" },
+                       values: new object[] { "079654", "Mucolysin", "Freyðitafla", "600 mg", "Acetylcysteinum INN", "lyfseðilsskylt", "26.08.2015", "Já", "Heimilt er að selja takmarkað magn lyfsins í lausasölu sbr. ofangreindar pakkningar merktar (L). Mest 50 stk. handa einstaklingi." });
+            migrationBuilder.InsertData(
+                       table: "meds",
+                       columns: new[] { "vpnr", "nafn", "lyfjaform", "styrkleiki", "innihald_lyfs", "afgreidslutilhogun", "markadsleyfi_utgefid", "markadsett", "ymsar_upplysingar" },
+                       values: new object[] { "076589", "Viagra", "Freyðitafla", "400 mg", "Acetylcysteinum INN", "+ólyfseðilsskylt", "26.08.2015", "Já", "Heimilt er að selja takmarkað magn lyfsins í lausasölu sbr. ofangreindar pakkningar merktar (L). Mest 50 stk. handa einstaklingi." });
+
+
+            migrationBuilder.InsertData(
+                       table: "meds",
+                       columns: new[] { "vpnr", "nafn", "lyfjaform", "styrkleiki", "innihald_lyfs", "afgreidslutilhogun", "markadsleyfi_utgefid", "markadsett", "ymsar_upplysingar" },
+                       values: new object[] { "048795", "Íbúfen", "Mixtúra", "600 mg", "Acetylcysteinum INN", "lyfseðilsskylt", "26.08.2015", "Já", "Heimilt er að selja takmarkað magn lyfsins í lausasölu sbr. ofangreindar pakkningar merktar (L). Mest 50 stk. handa einstaklingi." });
+
+
+            migrationBuilder.CreateTable(
+                name: "members",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    username = table.Column<string>(maxLength: 100, nullable: false),
+                    password = table.Column<string>(maxLength: 100, nullable: false),
+                    repeatpassword = table.Column<string>(nullable: true),
+                    name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_members", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +261,12 @@ namespace dotNetCoreAzure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "meds");
+
+            migrationBuilder.DropTable(
+                name: "members");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotNetCoreAzure.Data;
 
-namespace dotNetCoreAzure.Data.Migrations
+namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190308131519_members")]
-    partial class members
+    [Migration("20190314023509_meds")]
+    partial class meds
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,35 @@ namespace dotNetCoreAzure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("afgreidslutilhogun");
+
+                    b.Property<string>("innihald_lyfs");
+
+                    b.Property<string>("lyfjaform");
+
+                    b.Property<string>("markadsett");
+
+                    b.Property<string>("markadsleyfi_utgefid");
+
+                    b.Property<string>("nafn");
+
+                    b.Property<string>("styrkleiki");
+
+                    b.Property<string>("vpnr");
+
+                    b.Property<string>("ymsar_upplysingar");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("meds");
+                });
+
             modelBuilder.Entity("dotNetCoreAzure.Data.members", b =>
                 {
                     b.Property<int>("Id")
@@ -29,7 +58,9 @@ namespace dotNetCoreAzure.Data.Migrations
 
                     b.Property<string>("name");
 
-                    b.Property<string>("password");
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
 
