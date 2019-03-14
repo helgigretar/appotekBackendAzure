@@ -26,7 +26,7 @@ namespace dotNetCoreAzure.Pages
         {
             return _context.cabinet;
         }
-
+        //Get the cabinet from the user of the id
         // GET: api/cabinets/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Getcabinet([FromRoute] int id)
@@ -46,40 +46,7 @@ namespace dotNetCoreAzure.Pages
             return Ok(cabinet);
         }
 
-        // PUT: api/cabinets/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Putcabinet([FromRoute] int id, [FromBody] cabinet cabinet)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != cabinet.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(cabinet).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!cabinetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
         // Tekur inn id fyrir medicine og user og setur það í töfluna 
         // POST: api/cabinets
         [HttpPost]
@@ -93,38 +60,16 @@ namespace dotNetCoreAzure.Pages
             {
                 return BadRequest(new { status = "Error has occured make sure ID for user and medicine is available" });
             }
+            if (resCabinet.Count > 0)
+            {
+                return BadRequest(new { status = "You have this medicine in your cabinet" });
+            }
             else
             {
                 _context.cabinet.Add(cabinet);
                 await _context.SaveChangesAsync();
                 return Ok(new{status="medicine has been added to your account" });
             }
-        }
-
-        // DELETE: api/cabinets/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Deletecabinet([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var cabinet = await _context.cabinet.FindAsync(id);
-            if (cabinet == null)
-            {
-                return NotFound();
-            }
-
-            _context.cabinet.Remove(cabinet);
-            await _context.SaveChangesAsync();
-
-            return Ok(cabinet);
-        }
-
-        private bool cabinetExists(int id)
-        {
-            return _context.cabinet.Any(e => e.Id == id);
         }
     }
 }
