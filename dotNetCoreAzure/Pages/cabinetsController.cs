@@ -31,19 +31,15 @@ namespace dotNetCoreAzure.Pages
         [HttpGet("{id}")]
         public async Task<IActionResult> Getcabinet([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
+            var result = _context.cabinet.Where(s => s.userID == Int32.Parse(id.ToString())).ToList();
+            if(result.Count > 0)
             {
-                return BadRequest(ModelState);
+                return Ok(result);
             }
-
-            var cabinet = await _context.cabinet.FindAsync(id);
-
-            if (cabinet == null)
+            else
             {
-                return NotFound();
+                return BadRequest(new { status = "You have no medicine in your cabines" });
             }
-
-            return Ok(cabinet);
         }
 
         

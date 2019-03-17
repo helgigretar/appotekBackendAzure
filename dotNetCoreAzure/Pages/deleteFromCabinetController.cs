@@ -35,7 +35,7 @@ namespace dotNetCoreAzure.Pages
             }
             catch
             {
-                return BadRequest(new { status = "Bad error" });
+                return BadRequest(new { status = "Error Medicine was not deleted" });
             }
 
 
