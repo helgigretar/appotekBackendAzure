@@ -10,13 +10,13 @@ namespace dotNetCoreAzure.Data
     {
         public int Id { get; set; }
 
-        [Required, StringLength(100)]
+        [StringLength(100)]
         public string username { get; set; }
-        [Required, StringLength(100)]
+        [StringLength(100)]
         public string password { get; set; }
         public string repeatpassword { get; set; }
-
         public string name { get; set; }
+        public String role { get; set; }
 
     }
 }

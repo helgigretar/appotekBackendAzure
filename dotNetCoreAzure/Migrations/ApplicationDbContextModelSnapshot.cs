@@ -3,23 +3,82 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dotNetCoreAzure.Data;
 
 namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190314015028_members")]
-    partial class members
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("dotNetCoreAzure.Data.cabinet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("medicineID");
+
+                    b.Property<int>("userID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("cabinet");
+                });
+
+            modelBuilder.Entity("dotNetCoreAzure.Data.doctorUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("doctorId");
+
+                    b.Property<int>("userID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("doctorUser");
+                });
+
+            modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("active_ingredient");
+
+                    b.Property<string>("atc_code");
+
+                    b.Property<string>("legal_status");
+
+                    b.Property<string>("ma_issued");
+
+                    b.Property<string>("marketed");
+
+                    b.Property<string>("name");
+
+                    b.Property<string>("other_info");
+
+                    b.Property<string>("pharmaceutical_form");
+
+                    b.Property<string>("strength");
+
+                    b.Property<string>("vnr");
+
+                    b.HasKey("id");
+
+                    b.ToTable("meds");
+                });
 
             modelBuilder.Entity("dotNetCoreAzure.Data.members", b =>
                 {
@@ -34,6 +93,8 @@ namespace dotNetCoreAzure.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
+
+                    b.Property<string>("role");
 
                     b.Property<string>("username")
                         .IsRequired()

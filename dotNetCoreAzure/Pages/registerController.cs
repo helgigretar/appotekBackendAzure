@@ -113,7 +113,8 @@ namespace dotNetCoreAzure.Pages
                 name = members.name,
                 password = dotNetCoreAzure.Pages.decrypter.cryption.Encrypt(members.password),
                 repeatpassword = null,
-                username = members.username
+                username = members.username,
+                role = members.role,
             };
             _context.members.Add(members);
             await _context.SaveChangesAsync();

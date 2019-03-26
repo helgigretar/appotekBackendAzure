@@ -21,68 +21,14 @@ namespace dotNetCoreAzure.Pages
             _context = context;
         }
 
-        // GET: api/login
+        // GET: api/login ÞETTA ROUTE ER ÓLÖGLEGT OG ÉG ÞARF AÐ EYÐA ÞVÍ
         [HttpGet]
         public IEnumerable<members> Getmembers()
         {
             return _context.members;
         }
 
-        // GET: api/login/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Getmembers([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var members = await _context.members.FindAsync(id);
-
-            if (members == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(members);
-        }
-
-        // PUT: api/login/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Putmembers([FromRoute] int id, [FromBody] members members)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != members.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(members).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!membersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/login
+        // POST: api/login("umsername","password") __> SKilaer nafni
         [HttpPost]
         public async Task<IActionResult> Postmembers([FromBody] members members)
         {
@@ -92,7 +38,7 @@ namespace dotNetCoreAzure.Pages
             var result = _context.members.Where(s => s.username == username && dotNetCoreAzure.Pages.decrypter.cryption.Decrypt(s.password) == password).ToList();
             if (result.Count > 0)
             {
-                return Ok(new {result.Last().Id, result.Last().username, result.Last().name});
+                return Ok(new { result.Last().Id, result.Last().username, result.Last().name, result.Last().role });
             }
             else
             {
@@ -105,30 +51,6 @@ namespace dotNetCoreAzure.Pages
             temp = temp.Replace("]", "");
             return temp;
         }
-        // DELETE: api/login/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Deletemembers([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var members = await _context.members.FindAsync(id);
-            if (members == null)
-            {
-                return NotFound();
-            }
-
-            _context.members.Remove(members);
-            await _context.SaveChangesAsync();
-
-            return Ok(members);
-        }
-
-        private bool membersExists(int id)
-        {
-            return _context.members.Any(e => e.Id == id);
-        }
+        
     }
 }

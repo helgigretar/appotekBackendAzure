@@ -75,40 +75,7 @@ namespace dotNetCoreAzure.Pages
 
             return NoContent();
         }
-
-       /* // POST: api/getMeds
-        [HttpPost]
-        public async Task<IActionResult> Postmeds([FromBody] meds meds)
-        {
-            // var mes = await _context.meds.FindAsync(meds.vpnr);
-            var result = _context.meds.Where(S => S.vnr == meds.vnr.ToString());
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Accepted(new { meds });
-        }
-        */
-        // DELETE: api/getMeds/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Deletemeds([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var meds = await _context.meds.FindAsync(id);
-            if (meds == null)
-            {
-                return NotFound();
-            }
-
-            _context.meds.Remove(meds);
-            await _context.SaveChangesAsync();
-
-            return Ok(meds);
-        }
+       
 
         private bool medsExists(int id)
         {

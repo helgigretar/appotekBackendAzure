@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotNetCoreAzure.Data;
+using dotNetCoreAzure.Pages.myObjects;
 
 namespace dotNetCoreAzure.Pages
 {
@@ -31,10 +32,73 @@ namespace dotNetCoreAzure.Pages
         [HttpGet("{id}")]
         public async Task<IActionResult> Getcabinet([FromRoute] int id)
         {
+            List<medicine> storage = new List<medicine>();
+            
             var result = _context.cabinet.Where(s => s.userID == Int32.Parse(id.ToString())).ToList();
             if(result.Count > 0)
             {
-                return Ok(result);
+                String other_info;
+                String strength;
+                String active_ingredient;
+                String pharmaceutical_form;
+                String atc_code;
+                String ma_issued;
+                foreach (var item in result)
+                {
+                    var lyf = _context.meds.SingleOrDefault(s => s.id == item.medicineID);
+                    if(lyf.other_info == null)
+                    {
+                        other_info = "empty";
+                    }
+                    else
+                    {
+                        other_info = lyf.other_info;
+                    }
+                    if(lyf.strength == null)
+                    {
+                        strength = "Unknown";
+                    }
+                    else
+                    {
+                        strength = lyf.strength;
+                    }
+                    if(lyf.active_ingredient == null)
+                    {
+                        active_ingredient = "empty";
+                    }
+                    else
+                    {
+                        active_ingredient = lyf.active_ingredient;
+                    }
+                    if (lyf.pharmaceutical_form == null)
+                    {
+                        pharmaceutical_form = "empty";
+                    }
+                    else
+                    {
+                        pharmaceutical_form = lyf.pharmaceutical_form;
+                    }
+                    if (lyf.atc_code == null)
+                    {
+                        atc_code = "empty";
+                    }
+                    else
+                    {
+                        atc_code = lyf.atc_code;
+                    }
+                    if(lyf.ma_issued == null)
+                    {
+                        ma_issued = "empty";
+                    }
+                    else
+                    {
+                        ma_issued = lyf.ma_issued;
+                    }
+                    medicine meds = new medicine(lyf.id,lyf.name, active_ingredient, pharmaceutical_form, strength,
+                                                atc_code,lyf.vnr, other_info, lyf.marketed,ma_issued,lyf.legal_status );
+                    storage.Add(meds);
+                }
+                return Ok(storage);
             }
             else
             {
@@ -43,7 +107,7 @@ namespace dotNetCoreAzure.Pages
         }
 
         
-        // Tekur inn id fyrir medicine og user og setur það í töfluna 
+        // Tekur inn id fyrir medicine og user og setur það í töfluna hjá patient
         // POST: api/cabinets
         [HttpPost]
         public async Task<IActionResult> Postcabinet([FromBody] cabinet cabinet)

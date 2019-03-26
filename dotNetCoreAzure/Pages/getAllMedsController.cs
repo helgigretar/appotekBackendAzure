@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotNetCoreAzure.Data;
+using dotNetCoreAzure.Pages.myObjects;
 
 namespace dotNetCoreAzure.Pages
 {
@@ -47,14 +48,75 @@ namespace dotNetCoreAzure.Pages
 
             return Ok(meds);
         }
-        // POST: api/getAllMeds
+        // POST: api/getAllMeds --> Finnur lyf eftir leitarvali
         [HttpPost]
         public async Task<IActionResult> Postmeds([FromBody] meds meds)
         {
+            String other_info;
+            String strength;
+            String active_ingredient;
+            String pharmaceutical_form;
+            String atc_code;
+            String ma_issued;
+            List<medicine> storage = new List<medicine>();
             var res = _context.meds.Where(s => s.name.Contains(meds.name)).Take(10).ToList();
             if (res.Count > 0)
             {
-                return Ok(new { res});
+                foreach (var lyf in res)
+                {
+                    if (lyf.other_info == null)
+                    {
+                        other_info = "empty";
+                    }
+                    else
+                    {
+                        other_info = lyf.other_info;
+                    }
+                    if (lyf.strength == null)
+                    {
+                        strength = "Unknown";
+                    }
+                    else
+                    {
+                        strength = lyf.strength;
+                    }
+                    if (lyf.active_ingredient == null)
+                    {
+                        active_ingredient = "empty";
+                    }
+                    else
+                    {
+                        active_ingredient = lyf.active_ingredient;
+                    }
+                    if (lyf.pharmaceutical_form == null)
+                    {
+                        pharmaceutical_form = "empty";
+                    }
+                    else
+                    {
+                        pharmaceutical_form = lyf.pharmaceutical_form;
+                    }
+                    if (lyf.atc_code == null)
+                    {
+                        atc_code = "empty";
+                    }
+                    else
+                    {
+                        atc_code = lyf.atc_code;
+                    }
+                    if (lyf.ma_issued == null)
+                    {
+                        ma_issued = "empty";
+                    }
+                    else
+                    {
+                        ma_issued = lyf.ma_issued;
+                    }
+                    medicine medser = new medicine(lyf.id, lyf.name, active_ingredient, pharmaceutical_form, strength,
+                                                atc_code, lyf.vnr, other_info, lyf.marketed, ma_issued, lyf.legal_status);
+                    storage.Add(medser);
+                }
+                return Ok(storage);
             }
             else
             {
