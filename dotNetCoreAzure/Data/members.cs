@@ -17,6 +17,7 @@ namespace dotNetCoreAzure.Data
         public string repeatpassword { get; set; }
         public string name { get; set; }
         public String role { get; set; }
+        public String socialID { get; set; }
 
     }
 }

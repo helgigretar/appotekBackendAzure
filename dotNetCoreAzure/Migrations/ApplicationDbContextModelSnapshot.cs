@@ -89,15 +89,15 @@ namespace dotNetCoreAzure.Migrations
                     b.Property<string>("name");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
 
                     b.Property<string>("role");
 
+                    b.Property<string>("socialID");
+
                     b.Property<string>("username")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");

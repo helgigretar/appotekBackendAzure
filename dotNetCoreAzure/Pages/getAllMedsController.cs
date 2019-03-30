@@ -26,7 +26,7 @@ namespace dotNetCoreAzure.Pages
         [HttpGet]
         public IEnumerable<meds> Getmeds()
         {
-            return _context.meds.Take(10);
+            return _context.meds.Take(500);
         }
         //Nær í lyf af ID
         // GET: api/getAllMeds/5
@@ -59,7 +59,7 @@ namespace dotNetCoreAzure.Pages
             String atc_code;
             String ma_issued;
             List<medicine> storage = new List<medicine>();
-            var res = _context.meds.Where(s => s.name.Contains(meds.name)).Take(10).ToList();
+            var res = _context.meds.Where(s => s.name.Contains(meds.name)).Take(500).ToList();
             if (res.Count > 0)
             {
                 foreach (var lyf in res)

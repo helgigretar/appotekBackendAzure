@@ -6,28 +6,39 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using dotNetCoreAzure.Data;
+using dotNetCoreAzure.Pages.myObjects;
 
 namespace dotNetCoreAzure.Pages
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class registerController : ControllerBase
+    public class getAllPatients : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public registerController(ApplicationDbContext context)
+        public getAllPatients(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/members
+        // GET: api/getAllPatietsotMine
         [HttpGet]
-        public IEnumerable<members> Getmembers()
+        public async Task<IActionResult> getAllPatientsNotMine()
         {
-            return _context.members;
+            {
+                var patients = _context.members.Where(s => s.role == "false").ToList();
+                List<pateintsForDoctors> finalPatients = new List<pateintsForDoctors>();
+                foreach (var data in patients)
+                {
+                    finalPatients.Add(new pateintsForDoctors { id = data.Id, username = data.username, name = data.name });
+
+                }
+
+                return Ok(finalPatients);
+            }
         }
 
-        // GET: api/members/5
+        // GET: api/getAllPatientsNotMine/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Getmembers([FromRoute] int id)
         {
@@ -46,7 +57,7 @@ namespace dotNetCoreAzure.Pages
             return Ok(members);
         }
 
-        // PUT: api/members/5
+        // PUT: api/getAllPatientsNotMine/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Putmembers([FromRoute] int id, [FromBody] members members)
         {
@@ -81,53 +92,22 @@ namespace dotNetCoreAzure.Pages
             return NoContent();
         }
 
-        // POST: api/register
+        // POST: api/getAllPatientsNotMine
         [HttpPost]
         public async Task<IActionResult> Postmembers([FromBody] members members)
         {
-            string errors = "";
-            if(members.password != members.repeatpassword)
+            if (!ModelState.IsValid)
             {
-                errors += " The passwords are not the same #";
+                return BadRequest(ModelState);
             }
-            if(members.password.Length < 5)
-            {
-                errors += " Minumum length of the password is 6 letters #";
 
-            }
-            //Skoða hvort að það er til usernameið sem er að koma og ef það er til þá skila villu
-            var result = _context.members.Where(s => s.username == members.username).ToList();
-            if(result.Count > 0)
-            {
-                errors += " username already exists #";
-
-            }
-            result = _context.members.Where(s => s.socialID == members.socialID).ToList();
-            if(result.Count > 0)
-            {
-                errors += " Social Id already exist #";
-            }
-            if(errors.Length != 0)
-            {
-                return BadRequest(new{status =errors});
-            }
-            members = new members
-            {
-                Id = members.Id,
-                name = members.name,
-                password = dotNetCoreAzure.Pages.decrypter.cryption.Encrypt(members.password),
-                repeatpassword = null,
-                username = members.username,
-                role = members.role,
-                socialID = members.socialID,
-                
-            };
             _context.members.Add(members);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("Getmembers", new { status = "Success" });
+
+            return CreatedAtAction("Getmembers", new { id = members.Id }, members);
         }
-        
-        // DELETE: api/members/5
+
+        // DELETE: api/getAllPatientsNotMine/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Deletemembers([FromRoute] int id)
         {

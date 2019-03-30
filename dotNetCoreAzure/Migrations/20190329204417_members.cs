@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotNetCoreAzure.Migrations
 {
-    public partial class doctorUser : Migration
+    public partial class members : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,11 +103,12 @@ namespace dotNetCoreAzure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    username = table.Column<string>(maxLength: 100, nullable: false),
-                    password = table.Column<string>(maxLength: 100, nullable: false),
+                    username = table.Column<string>(maxLength: 100, nullable: true),
+                    password = table.Column<string>(maxLength: 100, nullable: true),
                     repeatpassword = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true),
-                    role = table.Column<string>(nullable: true)
+                    role = table.Column<string>(nullable: true),
+                    socialID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

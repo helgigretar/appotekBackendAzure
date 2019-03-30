@@ -10,7 +10,7 @@ using dotNetCoreAzure.Data;
 namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190318194619_members")]
+    [Migration("20190329204417_members")]
     partial class members
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,21 @@ namespace dotNetCoreAzure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("cabinet");
+                });
+
+            modelBuilder.Entity("dotNetCoreAzure.Data.doctorUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("doctorId");
+
+                    b.Property<int>("userID");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("doctorUser");
                 });
 
             modelBuilder.Entity("dotNetCoreAzure.Data.meds", b =>
@@ -76,15 +91,15 @@ namespace dotNetCoreAzure.Migrations
                     b.Property<string>("name");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
 
                     b.Property<string>("role");
 
+                    b.Property<string>("socialID");
+
                     b.Property<string>("username")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");

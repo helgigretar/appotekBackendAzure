@@ -10,8 +10,8 @@ using dotNetCoreAzure.Data;
 namespace dotNetCoreAzure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190323091920_doctorUser")]
-    partial class doctorUser
+    [Migration("20190329203447_cabinet")]
+    partial class cabinet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,20 +91,37 @@ namespace dotNetCoreAzure.Migrations
                     b.Property<string>("name");
 
                     b.Property<string>("password")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<string>("repeatpassword");
 
                     b.Property<string>("role");
 
+                    b.Property<string>("socialId");
+
                     b.Property<string>("username")
-                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.ToTable("members");
+                });
+
+            modelBuilder.Entity("dotNetCoreAzure.Pages.myObjects.pateintsForDoctors", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("name");
+
+                    b.Property<int>("userId");
+
+                    b.Property<string>("username");
+
+                    b.HasKey("id");
+
+                    b.ToTable("pateintsForDoctors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

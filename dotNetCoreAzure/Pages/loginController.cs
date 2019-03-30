@@ -45,6 +45,7 @@ namespace dotNetCoreAzure.Pages
                 return BadRequest(new { status = "Wrong credentials" });
             }            
         }
+        
         public string format(string temp)
         {
             temp = temp.Replace("[", "");
